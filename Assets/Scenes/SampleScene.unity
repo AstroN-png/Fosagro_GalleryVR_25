@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 55.977272, g: 55.969, b: 53.184547, a: 1}
+  m_IndirectSpecularColor: {r: 40.69199, g: 40.685825, b: 38.661396, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29433,7 +29433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 22.9321
+  m_Intensity: 26
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -33730,7 +33730,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.5882353, g: 1, b: 0.7744181, a: 1}
-  m_Intensity: 1000368.6
+  m_Intensity: 8388608
   m_Range: 19.241531
   m_SpotAngle: 107.30055
   m_InnerSpotAngle: 21.80208
@@ -34292,7 +34292,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8861, g: 0.86399996, b: 1, a: 1}
-  m_Intensity: 1000368.6
+  m_Intensity: 2097152
   m_Range: 19.241531
   m_SpotAngle: 139.1
   m_InnerSpotAngle: 21.80208
@@ -35210,7 +35210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 22.9321
+  m_Intensity: 24
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
