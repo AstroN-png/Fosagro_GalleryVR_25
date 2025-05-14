@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 4
   m_QualitySettings:
   - serializedVersion: 3
     name: Ray Tracing (Realtime GI)
@@ -29,6 +29,7 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     vSyncCount: 1
+    realtimeGICPUUsage: 25
     lodBias: 1
     maximumLODLevel: 0
     enableLODCrossFade: 1
@@ -77,6 +78,7 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     vSyncCount: 1
+    realtimeGICPUUsage: 25
     lodBias: 1
     maximumLODLevel: 0
     enableLODCrossFade: 1
@@ -125,8 +127,9 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     vSyncCount: 1
-    lodBias: 1
-    maximumLODLevel: 0
+    realtimeGICPUUsage: 25
+    lodBias: 6.13
+    maximumLODLevel: 7
     enableLODCrossFade: 1
     streamingMipmapsActive: 0
     streamingMipmapsAddAllCameras: 1
@@ -165,7 +168,7 @@ QualitySettings:
     skinWeights: 255
     globalTextureMipmapLimit: 0
     textureMipmapLimitSettings: []
-    anisotropicTextures: 2
+    anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0
     softVegetation: 1
@@ -173,6 +176,7 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     vSyncCount: 1
+    realtimeGICPUUsage: 50
     lodBias: 1
     maximumLODLevel: 0
     enableLODCrossFade: 1
@@ -213,7 +217,7 @@ QualitySettings:
     skinWeights: 255
     globalTextureMipmapLimit: 0
     textureMipmapLimitSettings: []
-    anisotropicTextures: 2
+    anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0
     softVegetation: 1
@@ -221,6 +225,7 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     vSyncCount: 1
+    realtimeGICPUUsage: 50
     lodBias: 1
     maximumLODLevel: 0
     enableLODCrossFade: 1
@@ -248,9 +253,10 @@ QualitySettings:
     excludedTargetPlatforms: []
   m_TextureMipmapLimitGroupNames: []
   m_PerPlatformDefaultQuality:
+    Android: 0
     GameCoreScarlett: 2
     GameCoreXboxOne: 3
     PS4: 3
     PS5: 2
     Server: 3
-    Standalone: 3
+    Standalone: 2
