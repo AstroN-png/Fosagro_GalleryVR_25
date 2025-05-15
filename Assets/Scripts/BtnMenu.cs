@@ -62,7 +62,7 @@ public class BtnMenu : MonoBehaviour
                 }
                 if (closeBtn)
                 {
-                   ObjData.instance.OpenGamePanel();
+                   SceneLoader.instance.LoadChooseFilial();
                 }
             }
         }

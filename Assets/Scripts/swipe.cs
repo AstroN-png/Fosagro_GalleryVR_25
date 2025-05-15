@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class swipe : MonoBehaviour
 {
+    
     public Color[] colors;
     public GameObject scrollbar;
     private float scroll_pos = 0;
@@ -20,6 +21,10 @@ public class swipe : MonoBehaviour
 
     private float targetScrollPos = 0;
 
+    void OnEnable()
+    {
+        targetScrollPos = 0f; // Устанавливаем цель прокрутки в начало
+    }
     void Update()
     {
         pos = new float[transform.childCount];
@@ -90,6 +95,7 @@ public class swipe : MonoBehaviour
 
     public void ScrollRight()
     {
+        scrollSpeed = 5f;
         float distance = 1f / (transform.childCount - 1f);
 
         for (int i = 0; i < pos.Length; i++)
@@ -102,10 +108,12 @@ public class swipe : MonoBehaviour
                 break;
             }
         }
+        
     }
 
     public void ScrollLeft()
     {
+        scrollSpeed = 5f;
         float distance = 1f / (transform.childCount - 1f);
 
         for (int i = 0; i < pos.Length; i++)

@@ -6,22 +6,23 @@ public class TransformMover : MonoBehaviour
 {
     public static TransformMover instance;
 
-    [Header("Целевые точки")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ")]
     public List<Transform> targets = new List<Transform>();
+    public List<Transform> filialsObj = new List<Transform>();
 
-    [Header("Настройки движения")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public float moveSpeed = 2f;
     public float rotateSpeed = 5f;
     public float stopDistance = 0.01f;
 
-    // Для отслеживания активных перемещений по объектам
+    // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private Dictionary<Transform, Coroutine> activeMoves = new Dictionary<Transform, Coroutine>();
 
     /// <summary>
-    /// Плавно перемещает указанный объект к целевой точке из списка по индексу.
+    /// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     /// </summary>
-    /// <param name="movingObject">Объект, который будет двигаться</param>
-    /// <param name="targetIndex">Индекс целевой точки</param>
+    /// <param name="movingObject">пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
+    /// <param name="targetIndex">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</param>
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class TransformMover : MonoBehaviour
     {
         if (targetIndex < 0 || targetIndex >= targets.Count)
         {
-            Debug.LogWarning("Неверный индекс цели: " + targetIndex);
+            Debug.LogWarning("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: " + targetIndex);
             return;
         }
 
@@ -52,14 +53,14 @@ public class TransformMover : MonoBehaviour
     {
         while (true)
         {
-            // Плавное перемещение
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             movingObject.position = Vector3.MoveTowards(movingObject.position, target.position, moveSpeed * Time.deltaTime);
 
-            // Плавный поворот
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             Quaternion targetRotation = Quaternion.LookRotation(target.forward, Vector3.up);
             movingObject.rotation = Quaternion.Slerp(movingObject.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
-            // Проверка на завершение
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             if (Vector3.Distance(movingObject.position, target.position) <= stopDistance &&
                 Quaternion.Angle(movingObject.rotation, target.rotation) <= 0.1f)
             {
@@ -71,7 +72,7 @@ public class TransformMover : MonoBehaviour
             yield return null;
         }
 
-        // Удаление записи после завершения движения
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (activeMoves.ContainsKey(movingObject))
             activeMoves.Remove(movingObject);
     }

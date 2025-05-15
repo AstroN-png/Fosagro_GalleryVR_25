@@ -12,7 +12,7 @@ public class ObjData : MonoBehaviour
     public GameObject resultMenu;
     public GameObject descriptionPanel;
     public GameObject gamePanel;
-    public GameObject photoPanel;
+    public GameObject[] filialPanel;
 
 
 
@@ -52,10 +52,10 @@ public class ObjData : MonoBehaviour
         gamePanel.SetActive(true);
     }
 
-    public void OpenPhotoPanel()
+    public void OpenFilialPanel(int id)
     {
         AllDisable();
-        photoPanel.SetActive(true);
+        filialPanel[id].SetActive(true);
         
     }
 
@@ -97,6 +97,10 @@ public class ObjData : MonoBehaviour
         gamePanel.SetActive(false);
         pauseMenu.SetActive(false);
         resultMenu.SetActive(false);
-        photoPanel.SetActive(false);
+        for (int i = 0; i < filialPanel.Length; i++)
+        {
+            filialPanel[i].SetActive(false);
+        }
+        
     }
 }

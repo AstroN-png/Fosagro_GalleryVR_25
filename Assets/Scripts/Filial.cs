@@ -30,17 +30,14 @@ public class Filial : MonoBehaviour
                 loading = false;
 
                 loadingFrameObj.SetActive(false);
-                ObjData.instance.OpenPhotoPanel();
-                PhotoPanel.instance.InitCurrentGroup(idOfFilial);
+                SceneLoader.instance.LoadFilial(idOfFilial);
+                //PhotoPanel.instance.InitCurrentGroup(idOfFilial);
 
             }
         }
     }
 
-    private void OpenPhotoPanel()
-    {
-        ObjData.instance.photoPanel.SetActive(true);
-    }
+    
 
     public void UnselectBtn()
     {

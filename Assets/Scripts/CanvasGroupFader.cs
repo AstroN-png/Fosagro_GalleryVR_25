@@ -12,13 +12,13 @@ public class CanvasGroupFader : MonoBehaviour
         canvasGroup.alpha = 0f;
     }
 
-    // Включает затемнение
+    // Р’РєР»СЋС‡Р°РµС‚ Р·Р°С‚РµРјРЅРµРЅРёРµ
     public void FadeOut()
     {
         StartFade(0f);
     }
 
-    // Включает осветление
+    // Р’РєР»СЋС‡Р°РµС‚ РѕСЃРІРµС‚Р»РµРЅРёРµ
     public void FadeIn()
     {
         StartFade(1f);
