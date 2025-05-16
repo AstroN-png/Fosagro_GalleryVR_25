@@ -29,6 +29,15 @@ public class TransformMover : MonoBehaviour
         instance = this;
     }
 
+    public void AllToDefault()
+    {
+        StopAllCoroutines();
+        for (int i = 0; i < filialsObj.Count; i++)
+        {
+            MoveToTarget(filialsObj[i], i);
+        }
+    }
+
     public void MoveToTarget(Transform movingObject, int targetIndex)
     {
         if (targetIndex < 0 || targetIndex >= targets.Count)

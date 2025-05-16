@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
 
     public void Restart()
     {
-        ObjData.instance.OpenMainMenu();
+        ObjData.instance.OpenGamePanel();
        
     }
 

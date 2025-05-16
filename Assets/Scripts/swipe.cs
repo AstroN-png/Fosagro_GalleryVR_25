@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class swipe : MonoBehaviour
 {
-    
+    [SerializeField] VideoController videoController;
     public Color[] colors;
     public GameObject scrollbar;
     private float scroll_pos = 0;
@@ -24,6 +24,10 @@ public class swipe : MonoBehaviour
     void OnEnable()
     {
         targetScrollPos = 0f; // Устанавливаем цель прокрутки в начало
+        if (videoController != null)
+        {
+            videoController.PlayVideo(0);
+        }
     }
     void Update()
     {
@@ -105,10 +109,15 @@ public class swipe : MonoBehaviour
                 int nextIndex = Mathf.Min(i + 1, pos.Length - 1);
                 targetScrollPos = pos[nextIndex];
                 time = 0;
+                if (videoController != null)
+                {
+                    videoController.PlayVideo(nextIndex);
+                }
                 break;
             }
         }
         
+
     }
 
     public void ScrollLeft()
@@ -123,6 +132,10 @@ public class swipe : MonoBehaviour
                 int prevIndex = Mathf.Max(i - 1, 0);
                 targetScrollPos = pos[prevIndex];
                 time = 0;
+                if (videoController != null)
+                {
+                    videoController.PlayVideo(prevIndex);
+                }
                 break;
             }
         }
