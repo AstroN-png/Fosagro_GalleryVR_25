@@ -12,7 +12,7 @@ public class PhotoPanel : MonoBehaviour
     [SerializeField] private Image image;
 
     private int currentPhotoIndex = 0;
-    public ImageGroup currentGroup;
+    //public ImageGroup currentGroup;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
 
@@ -31,13 +31,13 @@ public class PhotoPanel : MonoBehaviour
     {
         //if (DataLoader.instance == null || DataLoader.instance.imageGroups == null)
         //{
-        //    Debug.LogError("DataLoader.instance не инициализирован.");
+        //    Debug.LogError("DataLoader.instance пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
         //    return;
         //}
 
         //if (filialId < 0 || filialId >= DataLoader.instance.imageGroups.Count)
         //{
-        //    Debug.LogError("Неверный filialId: " + filialId);
+        //    Debug.LogError("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ filialId: " + filialId);
         //    return;
         //}
 
@@ -48,54 +48,54 @@ public class PhotoPanel : MonoBehaviour
        // ShowPhoto();
     }
 
-    public void NextPhoto()
-    {
-        if (currentGroup == null || currentGroup.imageNames.Count == 0)
-            return;
+    // public void NextPhoto()
+    // {
+    //     if (currentGroup == null || currentGroup.imageNames.Count == 0)
+    //         return;
 
-        if (currentPhotoIndex < currentGroup.imageNames.Count - 1)
-        {
-            currentPhotoIndex++;
-            ShowPhoto();
-        }
-    }
+    //     if (currentPhotoIndex < currentGroup.imageNames.Count - 1)
+    //     {
+    //         currentPhotoIndex++;
+    //        // ShowPhoto();
+    //     }
+    // }
 
-    public void PreviousPhoto()
-    {
-        if (currentGroup == null || currentGroup.imageNames.Count == 0)
-            return;
+    // public void PreviousPhoto()
+    // {
+    //     if (currentGroup == null || currentGroup.imageNames.Count == 0)
+    //         return;
 
-        if (currentPhotoIndex > 0)
-        {
-            currentPhotoIndex--;
-            ShowPhoto();
-        }
-    }
+    //     if (currentPhotoIndex > 0)
+    //     {
+    //         currentPhotoIndex--;
+    //         //ShowPhoto();
+    //     }
+    // }
 
-    private void ShowPhoto()
-    {
-        if (currentGroup == null || currentGroup.imageNames.Count == 0)
-        {
-            image.sprite = null;
-            leftBtn.SetActive(false);
-            rightBtn.SetActive(false);
-            return;
-        }
+    // private void ShowPhoto()
+    // {
+    //     if (currentGroup == null || currentGroup.imageNames.Count == 0)
+    //     {
+    //         image.sprite = null;
+    //         leftBtn.SetActive(false);
+    //         rightBtn.SetActive(false);
+    //         return;
+    //     }
 
-        string folderPath = Path.Combine(Application.streamingAssetsPath, currentGroup.folderName);
-        string fileName = currentGroup.imageNames[currentPhotoIndex];
-        Sprite sprite = DataLoader.ImageSprite(folderPath, fileName);
+    //     string folderPath = Path.Combine(Application.streamingAssetsPath, currentGroup.folderName);
+    //     string fileName = currentGroup.imageNames[currentPhotoIndex];
+    //     //Sprite sprite = DataLoader.ImageSprite(folderPath, fileName);
 
-        if (sprite != null)
-        {
-            image.gameObject.SetActive(false);
-            image.sprite = sprite;
-            image.gameObject.SetActive(true);
+    //     if (sprite != null)
+    //     {
+    //         image.gameObject.SetActive(false);
+    //         image.sprite = sprite;
+    //         image.gameObject.SetActive(true);
 
-            Debug.Log($"Показ фото {currentPhotoIndex + 1}/{currentGroup.imageNames.Count}: {fileName}");
-        }
+    //         Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ {currentPhotoIndex + 1}/{currentGroup.imageNames.Count}: {fileName}");
+    //     }
 
-        leftBtn.SetActive(currentPhotoIndex > 0);
-        rightBtn.SetActive(currentPhotoIndex < currentGroup.imageNames.Count - 1);
-    }
+    //     leftBtn.SetActive(currentPhotoIndex > 0);
+    //     rightBtn.SetActive(currentPhotoIndex < currentGroup.imageNames.Count - 1);
+    // }
 }

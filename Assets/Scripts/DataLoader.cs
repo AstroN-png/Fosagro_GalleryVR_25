@@ -1,110 +1,132 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Video;
+using System.Collections;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 public class DataLoader : MonoBehaviour
 {
-    public static DataLoader instance;
-    public List<ImageGroup> imageGroups = new List<ImageGroup>();
+    [SerializeField] AudioSource[] audioSource;
+    [SerializeField] Transform[] spawnPhoto;
+    [SerializeField] Transform spawnVideo;
+    [SerializeField] GameObject photoPrefab;
+    [SerializeField] GameObject videoPrefab;
 
-    private readonly string[] folderNames = { "Balakovo", "Cherepovec", "Kirovsk", "Volhov" };
+    private string[] pathPhoto;
+    private string[] pathAudio;
+    private string pathVideo;
 
-    private void Awake()
+    void Awake()
     {
-        instance = this;
+        pathPhoto = new string[4]
+        {
+            "Media/Photo/Balakovo",
+            "Media/Photo/Cherepovec",
+            "Media/Photo/Kirovsk",
+            "Media/Photo/Volhov"
+        };
+
+        pathVideo = "Media/Video";
+
+        pathAudio = new string[5]
+        {
+            "Media/Audio/Balakovo",
+            "Media/Audio/Cherepovec",
+            "Media/Audio/Kirovsk",
+            "Media/Audio/Volhov",
+            "Media/Audio/Main"
+        };
+
+        StartCoroutine(LoadMedia());
     }
 
-    void Start()
+    IEnumerator LoadMedia()
     {
-        LoadImageNames();
-
-        // Пример вывода
-        foreach (var group in imageGroups)
+        // --- Р—Р°РіСЂСѓР·РєР° Р°СѓРґРёРѕ ---
+        for (int i = 0; i < pathAudio.Length && i < audioSource.Length; i++)
         {
-            Debug.Log($"--- {group.folderName} ---");
-
-            if (group.imageNames.Count == 0)
+            string audioPath = Path.Combine(Application.streamingAssetsPath, pathAudio[i] + ".mp3"); // РёР»Рё .wav
+            using (WWW www = new WWW("file://" + audioPath))
             {
-                Debug.Log("  (Пусто)");
-            }
-
-            foreach (string name in group.imageNames)
-            {
-                Debug.Log("  " + name);
+                yield return www;
+                if (www.error == null)
+                {
+                    audioSource[i].clip = www.GetAudioClip();
+                    audioSource[i].Play();
+                }
+                else
+                {
+                    Debug.LogError($"Failed to load audio: {audioPath} - {www.error}");
+                }
             }
         }
+
+        // --- Р—Р°РіСЂСѓР·РєР° С„РѕС‚Рѕ СЃ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ С‡РёСЃР»Сѓ РІ РёРјРµРЅРё ---
+for (int i = 0; i < pathPhoto.Length && i < spawnPhoto.Length; i++)
+{
+    string fullPhotoPath = Path.Combine(Application.streamingAssetsPath, pathPhoto[i]);
+    if (!Directory.Exists(fullPhotoPath))
+    {
+        Debug.LogWarning($"Photo directory not found: {fullPhotoPath}");
+        continue;
     }
 
-    void LoadImageNames()
-    {
-        imageGroups.Clear(); // очищаем список на случай повторной загрузки
-        string streamingAssetsPath = Application.streamingAssetsPath;
-
-        foreach (string folder in folderNames)
+    // РџРѕР»СѓС‡Р°РµРј С‚РѕР»СЊРєРѕ jpg/png, СЃРѕСЂС‚РёСЂСѓРµРј РїРѕ РЅРѕРјРµСЂСѓ РІ РёРјРµРЅРё
+    string[] photoFiles = Directory.GetFiles(fullPhotoPath, "*.*")
+        .Where(f => f.EndsWith(".jpg") || f.EndsWith(".png"))
+        .OrderBy(f =>
         {
-            string folderPath = Path.Combine(streamingAssetsPath, folder);
-            ImageGroup group = new ImageGroup { folderName = folder };
+            string name = Path.GetFileNameWithoutExtension(f);
+            int number = 0;
+            int.TryParse(name, out number);
+            return number;
+        })
+        .ToArray();
 
-            if (Directory.Exists(folderPath))
+    foreach (string filePath in photoFiles)
+    {
+        using (WWW www = new WWW("file://" + filePath))
+        {
+            yield return www;
+            if (www.error == null)
             {
-                string[] files = Directory.GetFiles(folderPath);
-                foreach (string filePath in files)
+                Texture2D tex = www.texture;
+                GameObject photoObj = Instantiate(photoPrefab, spawnPhoto[i]);
+                Image img = photoObj.GetComponentInChildren<Image>();
+                if (img != null)
                 {
-                    string ext = Path.GetExtension(filePath).ToLower();
-                    if (ext == ".jpg" || ext == ".jpeg" || ext == ".png")
-                    {
-                        group.imageNames.Add(Path.GetFileName(filePath));
-                    }
+                    img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
                 }
             }
             else
             {
-                Debug.LogWarning($"Папка не найдена: {folderPath}");
+                Debug.LogError($"Failed to load image: {filePath} - {www.error}");
             }
-
-            imageGroups.Add(group);
         }
-    }
-
-    public static Sprite ImageSprite(string path, string name)
-    {
-        string fullPath = Path.Combine(path, name);
-
-        // Убедимся, что файл существует
-        if (!File.Exists(fullPath))
-        {
-            Debug.LogError("Файл не найден: " + fullPath);
-            return null;
-        }
-
-        // Считываем байты изображения
-        byte[] imageData = File.ReadAllBytes(fullPath);
-
-        // Создаем текстуру
-        Texture2D texture = new Texture2D(2, 2); // Размер не важен — будет заменён при LoadImage
-        if (!texture.LoadImage(imageData))
-        {
-            Debug.LogError("Не удалось загрузить изображение: " + fullPath);
-            return null;
-        }
-
-        // Создаем спрайт
-        Sprite sprite = Sprite.Create(
-            texture,
-            new Rect(0, 0, texture.width, texture.height),
-            new Vector2(0.5f, 0.5f), // pivot по центру
-            100f                     // pixels per unit — настрой по ситуации
-        );
-
-        return sprite;
     }
 }
 
-[Serializable]
-public class ImageGroup
-{
-    public string folderName;
-    public List<string> imageNames = new List<string>();
+        // --- Р—Р°РіСЂСѓР·РєР° РІРёРґРµРѕ ---
+        string fullVideoPath = Path.Combine(Application.streamingAssetsPath, pathVideo);
+        if (Directory.Exists(fullVideoPath))
+        {
+            string[] videoFiles = Directory.GetFiles(fullVideoPath, "*.mp4"); // РёР»Рё РґСЂСѓРіРёРµ С„РѕСЂРјР°С‚С‹
+            foreach (string videoPath in videoFiles)
+            {
+                GameObject videoObj = Instantiate(videoPrefab, spawnVideo);
+                VideoPlayer vp = videoObj.GetComponentInChildren<VideoPlayer>();
+                if (vp != null)
+                {
+                    vp.url = "file://" + videoPath;
+                    vp.Play();
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Video directory not found: {fullVideoPath}");
+        }
+    }
 }
