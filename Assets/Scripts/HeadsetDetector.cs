@@ -30,8 +30,8 @@ public class HeadsetDetector : MonoBehaviour
     private void OnHMDUnmounted()
     {
         ObjData.instance.OpenMainMenu();
-        Debug.LogError("Ψλεμ ρνÿς");
-        //Time.timeScale = 0f;
+        Debug.LogError("Π¨Π»ΠµΠΌ ΡΠ½ΡΡ‚");
+        Time.timeScale = 0f;
        // ScrollWithAudio.instance.PlaySound(false);
     }
 }
