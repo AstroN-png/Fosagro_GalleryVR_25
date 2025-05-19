@@ -33,7 +33,7 @@ public class BtnMenu : MonoBehaviour
     {
         if (loading)
         {
-            loadingFrameImg.fillAmount += Time.deltaTime / 2;
+            loadingFrameImg.fillAmount += Time.deltaTime / 1f;
 
             if (loadingFrameImg.fillAmount >= 1)
             {

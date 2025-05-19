@@ -104,7 +104,7 @@ public class swipe : MonoBehaviour
 
     public void ScrollRight()
     {
-        scrollSpeed = 5f;
+        scrollSpeed = 2f;
         float distance = 1f / (transform.childCount - 1f);
 
         for (int i = 0; i < pos.Length; i++)
@@ -145,7 +145,7 @@ public class swipe : MonoBehaviour
 
     public void ScrollLeft()
     {
-        scrollSpeed = 5f;
+        scrollSpeed = 2f;
         float distance = 1f / (transform.childCount - 1f);
 
         for (int i = 0; i < pos.Length; i++)
