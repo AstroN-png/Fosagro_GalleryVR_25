@@ -18,6 +18,8 @@ public class swipe : MonoBehaviour
     public float zOffsetStep = 10f;        // Смещение по оси Z
     public float zLerpSpeed = 0.1f;        // Скорость интерполяции по Z
     public float alphaStep = 0.05f;        // Шаг изменения прозрачности
+    [SerializeField] GameObject btnLeft;
+    [SerializeField] GameObject btnRight;
 
     private float targetScrollPos = 0;
 
@@ -28,6 +30,9 @@ public class swipe : MonoBehaviour
         {
             videoController.PlayVideo(0);
         }
+        btnRight.SetActive(true);
+        btnLeft.SetActive(false);
+
     }
     void Update()
     {
@@ -113,6 +118,24 @@ public class swipe : MonoBehaviour
                 {
                     videoController.PlayVideo(nextIndex);
                 }
+                if (nextIndex == pos.Length - 1)
+                {
+                    btnRight.SetActive(false);
+                }
+                else
+                {
+                    btnRight.SetActive(true);
+                }
+
+                if (nextIndex == 0)
+                {
+                    btnLeft.SetActive(false);
+                }
+                else
+                {
+                    btnLeft.SetActive(true);
+                }
+
                 break;
             }
         }
@@ -135,6 +158,24 @@ public class swipe : MonoBehaviour
                 if (videoController != null)
                 {
                     videoController.PlayVideo(prevIndex);
+                }
+
+                if (prevIndex == pos.Length - 1)
+                {
+                    btnRight.SetActive(false);
+                }
+                else
+                {
+                    btnRight.SetActive(true);
+                }
+
+                if (prevIndex == 0)
+                {
+                    btnLeft.SetActive(false);
+                }
+                else
+                {
+                    btnLeft.SetActive(true);
                 }
                 break;
             }

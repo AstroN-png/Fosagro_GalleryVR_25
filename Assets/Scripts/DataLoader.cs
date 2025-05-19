@@ -8,11 +8,14 @@ using System.Linq;
 
 public class DataLoader : MonoBehaviour
 {
+    public GameObject loadingScreen;
+    public AudioSource audioSourceMainScreen;
     [SerializeField] AudioSource[] audioSource;
     [SerializeField] Transform[] spawnPhoto;
     [SerializeField] Transform spawnVideo;
     [SerializeField] GameObject photoPrefab;
-    [SerializeField] GameObject videoPrefab;
+    [SerializeField] GameObject[] videoPrefab;
+    [SerializeField] VideoController videoController;
 
     private string[] pathPhoto;
     private string[] pathAudio;
@@ -44,6 +47,8 @@ public class DataLoader : MonoBehaviour
 
     IEnumerator LoadMedia()
     {
+        loadingScreen.SetActive(true);
+        audioSourceMainScreen.Pause();
         // --- Загрузка аудио ---
         for (int i = 0; i < pathAudio.Length && i < audioSource.Length; i++)
         {
@@ -108,15 +113,19 @@ for (int i = 0; i < pathPhoto.Length && i < spawnPhoto.Length; i++)
     }
 }
 
-        // --- Загрузка видео ---
-        string fullVideoPath = Path.Combine(Application.streamingAssetsPath, pathVideo);
+        //---Загрузка видео-- -
+       string fullVideoPath = Path.Combine(Application.streamingAssetsPath, pathVideo);
         if (Directory.Exists(fullVideoPath))
         {
             string[] videoFiles = Directory.GetFiles(fullVideoPath, "*.mp4"); // или другие форматы
+            videoController.videoPlayer = new VideoPlayer[videoFiles.Length];
+            int k = 0;
             foreach (string videoPath in videoFiles)
             {
-                GameObject videoObj = Instantiate(videoPrefab, spawnVideo);
+                GameObject videoObj = Instantiate(videoPrefab[k], spawnVideo);
                 VideoPlayer vp = videoObj.GetComponentInChildren<VideoPlayer>();
+                videoController.videoPlayer[k] = vp;
+                k++;
                 if (vp != null)
                 {
                     vp.url = "file://" + videoPath;
@@ -128,5 +137,8 @@ for (int i = 0; i < pathPhoto.Length && i < spawnPhoto.Length; i++)
         {
             Debug.LogWarning($"Video directory not found: {fullVideoPath}");
         }
+        loadingScreen.SetActive(false);
+        audioSourceMainScreen.Play();
+
     }
 }

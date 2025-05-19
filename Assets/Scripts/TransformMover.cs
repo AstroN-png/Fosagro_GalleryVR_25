@@ -31,7 +31,7 @@ public class TransformMover : MonoBehaviour
 
     public void AllToDefault()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         for (int i = 0; i < filialsObj.Count; i++)
         {
             MoveToTarget(filialsObj[i], i);
@@ -50,7 +50,7 @@ public class TransformMover : MonoBehaviour
 
         if (activeMoves.ContainsKey(movingObject))
         {
-            StopCoroutine(activeMoves[movingObject]);
+           // StopCoroutine(activeMoves[movingObject]);
             activeMoves.Remove(movingObject);
         }
 

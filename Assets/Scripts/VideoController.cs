@@ -5,7 +5,7 @@ using UnityEngine.Video;
 
 public class VideoController : MonoBehaviour
 {
-    [SerializeField] VideoPlayer [] videoPlayer;
+    public VideoPlayer [] videoPlayer;
 
     public void PlayVideo(int index)
     {

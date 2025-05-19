@@ -12,6 +12,7 @@ public class SceneLoader : MonoBehaviour
     public GameObject particalPrafab;
     public Transform transformForPrefab;
     public GameObject effect;
+    [SerializeField] TransformMover transformMover;
 
 
     void Awake()
@@ -36,20 +37,20 @@ public class SceneLoader : MonoBehaviour
         effect.SetActive(true);
         sphereAnim.SetTrigger("Twist");
         idOfFilialNowSelected = filialId;
-        TransformMover.instance.MoveToTarget(TransformMover.instance.filialsObj[filialId], 5);
+        TransformMover.instance.MoveToTarget(transformMover.filialsObj[filialId], 5);
         yield return new WaitForSeconds(1f);
-        GameObject obj = Instantiate(particalPrafab, transformForPrefab);
+       // GameObject obj = Instantiate(particalPrafab, transformForPrefab);
 
         flashScreen.FadeIn();
         yield return new WaitForSeconds(1f);
         sphereAnim.SetTrigger("Twist");
         ObjData.instance.OpenFilialPanel(filialId);
         flashScreen.FadeOut();
-        if (obj != null)
-        {
-            Destroy(obj);
-
-        }
+       // if (obj != null)
+       // {
+       //     Destroy(obj);
+       //
+       // }
         effect.SetActive(false);
 
         yield break;
@@ -72,7 +73,7 @@ public class SceneLoader : MonoBehaviour
         sphereAnim.SetTrigger("Twist");
 
         //yield return new WaitForSeconds(1f);
-        TransformMover.instance.MoveToTarget(TransformMover.instance.
+        TransformMover.instance.MoveToTarget(transformMover.
                        filialsObj[idOfFilialNowSelected], idOfFilialNowSelected);
         idOfFilialNowSelected = -1;
         if (obj != null)

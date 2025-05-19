@@ -8,6 +8,7 @@ public class Filial : MonoBehaviour
     [SerializeField] GameObject loadingFrameObj;
     [SerializeField] bool startLoading;
     [SerializeField] int idOfFilial;
+    [SerializeField] SceneLoader sceneLoader;
 
     private void Update()
     {
@@ -30,7 +31,7 @@ public class Filial : MonoBehaviour
                 loading = false;
 
                 loadingFrameObj.SetActive(false);
-                SceneLoader.instance.LoadFilial(idOfFilial);
+                sceneLoader.LoadFilial(idOfFilial);
                 //PhotoPanel.instance.InitCurrentGroup(idOfFilial);
 
             }
